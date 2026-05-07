@@ -1,0 +1,12 @@
+{
+  "address": "Fd1e9ECkDJrGyqzpWV2nLM8xBghiDA8PCVWdJD7Fybag",
+  "metadata": {
+    "name": "trustname_attestation",
+    "version": "0.1.0",
+    "spec": "0.1.0"
+  },
+  "instructions": [
+    { "name": "create_campaign" },
+    { "name": "issue_attestation" }
+  ]
+}

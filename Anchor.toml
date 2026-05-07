@@ -1,0 +1,19 @@
+[features]
+seeds = false
+skip-lint = false
+
+[programs.localnet]
+trustname_attestation = "Fd1e9ECkDJrGyqzpWV2nLM8xBghiDA8PCVWdJD7Fybag"
+
+[programs.devnet]
+trustname_attestation = "Fd1e9ECkDJrGyqzpWV2nLM8xBghiDA8PCVWdJD7Fybag"
+
+[registry]
+url = "https://api.apr.dev"
+
+[provider]
+cluster = "devnet"
+wallet = "~/.config/solana/id.json"
+
+[scripts]
+test = "npx vitest run"
