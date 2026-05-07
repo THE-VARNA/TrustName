@@ -1,0 +1,89 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 220 38% 6%;
+  --foreground: 188 32% 94%;
+  --card: 218 34% 10%;
+  --card-foreground: 188 32% 94%;
+  --primary: 177 87% 58%;
+  --primary-foreground: 213 40% 8%;
+  --secondary: 219 28% 16%;
+  --secondary-foreground: 187 30% 90%;
+  --muted: 220 23% 17%;
+  --muted-foreground: 195 16% 70%;
+  --accent: 158 75% 52%;
+  --accent-foreground: 213 40% 8%;
+  --destructive: 356 78% 66%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 190 34% 86% / 0.14;
+  --input: 190 34% 86% / 0.16;
+  --ring: 177 87% 58%;
+  --radius: 0.5rem;
+}
+
+* {
+  border-color: hsl(var(--border));
+}
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 12% 10%, rgba(46, 213, 184, 0.16), transparent 34rem),
+    radial-gradient(circle at 78% 8%, rgba(67, 126, 247, 0.14), transparent 36rem),
+    linear-gradient(135deg, #071015 0%, #0b1220 46%, #10131b 100%);
+  color: hsl(var(--foreground));
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+}
+
+::selection {
+  background: rgba(71, 221, 198, 0.32);
+}
+
+.glass {
+  border: 1px solid rgba(211, 249, 244, 0.14);
+  background: linear-gradient(145deg, rgba(12, 24, 35, 0.74), rgba(14, 26, 39, 0.46));
+  box-shadow: 0 24px 80px rgba(2, 8, 23, 0.32);
+  backdrop-filter: blur(22px) saturate(140%);
+}
+
+.glass-subtle {
+  border: 1px solid rgba(211, 249, 244, 0.1);
+  background: rgba(10, 22, 31, 0.48);
+  backdrop-filter: blur(18px) saturate(128%);
+}
+
+.luminous-line {
+  background: linear-gradient(90deg, transparent, rgba(71, 221, 198, 0.68), transparent);
+  height: 1px;
+}
+
+.wallet-adapter-button {
+  min-height: 42px;
+  border-radius: 8px !important;
+  background: hsl(var(--primary)) !important;
+  color: hsl(var(--primary-foreground)) !important;
+  font-family: inherit !important;
+  font-weight: 700 !important;
+}
+
+.wallet-adapter-dropdown-list {
+  border: 1px solid rgba(211, 249, 244, 0.14) !important;
+  background: #0b1420 !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
