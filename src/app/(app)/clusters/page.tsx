@@ -3,7 +3,23 @@ import { clusterSignals } from "@/lib/demo-data";
 import { shortAddress } from "@/lib/utils";
 import { StatusChip, Surface } from "@/components/ui/surface";
 
+const graphNodes = [
+  { domain: "sprout42.sol", left: 18, top: 20, signalId: "cluster-shared-x" },
+  { domain: "sprout43.sol", left: 43, top: 32, signalId: "cluster-shared-x" },
+  { domain: "sprout44.sol", left: 68, top: 20, signalId: "cluster-shared-x" },
+  { domain: "mint-lane.sol", left: 18, top: 62, signalId: "cluster-weak-records" },
+  { domain: "mint-lane-2.sol", left: 43, top: 74, signalId: "cluster-weak-records" }
+];
+
+const graphEdges = [
+  { from: "sprout42.sol", to: "sprout43.sol", severity: "high" },
+  { from: "sprout43.sol", to: "sprout44.sol", severity: "high" },
+  { from: "mint-lane.sol", to: "mint-lane-2.sol", severity: "medium" }
+];
+
 export default function ClustersPage() {
+  const nodeByDomain = new Map(graphNodes.map((node) => [node.domain, node]));
+
   return (
     <div className="space-y-6">
       <Surface className="p-6">
@@ -20,23 +36,48 @@ export default function ClustersPage() {
             <Network className="h-5 w-5 text-primary" aria-hidden="true" />
             <h2 className="text-xl font-semibold">Risk graph</h2>
           </div>
-          <div className="relative mt-6 aspect-square rounded-lg border border-white/10 bg-white/6">
-            {clusterSignals.flatMap((signal, signalIndex) =>
-              signal.domains.map((domain, index) => (
+          <div className="relative mt-6 aspect-square overflow-hidden rounded-lg border border-white/10 bg-white/6">
+            <svg className="absolute inset-0 h-full w-full" viewBox="0 0 100 100" role="img" aria-label="Risk links between grouped SNS domains">
+              {graphEdges.map((edge) => {
+                const from = nodeByDomain.get(edge.from);
+                const to = nodeByDomain.get(edge.to);
+                if (!from || !to) return null;
+                const tone = edge.severity === "high" ? "rgba(251, 191, 36, 0.58)" : "rgba(125, 211, 252, 0.42)";
+                return (
+                  <line
+                    key={`${edge.from}-${edge.to}`}
+                    x1={from.left + 8}
+                    y1={from.top + 8}
+                    x2={to.left + 8}
+                    y2={to.top + 8}
+                    stroke={tone}
+                    strokeWidth="0.45"
+                    strokeLinecap="round"
+                  />
+                );
+              })}
+            </svg>
+            {graphNodes.map((node) => {
+              const signal = clusterSignals.find((item) => item.id === node.signalId);
+              const tone = signal?.severity === "high" ? "border-amber-200/40 bg-amber-200/10" : "border-primary/30 bg-primary/10";
+              return (
                 <div
-                  key={domain}
-                  className="absolute flex h-24 w-24 items-center justify-center rounded-full border border-primary/30 bg-primary/10 p-3 text-center text-xs text-cyan-50"
+                  key={node.domain}
+                  className={`absolute z-10 flex h-24 w-24 items-center justify-center rounded-full border p-3 text-center text-xs font-semibold text-cyan-50 ${tone}`}
                   style={{
-                    left: `${18 + index * 25}%`,
-                    top: `${20 + signalIndex * 38 + (index % 2) * 12}%`
+                    left: `${node.left}%`,
+                    top: `${node.top}%`
                   }}
+                  title={signal?.label}
                 >
-                  {domain}
+                  {node.domain}
                 </div>
-              ))
-            )}
-            <div className="absolute left-[32%] top-[38%] h-px w-48 rotate-12 bg-amber-200/35" />
-            <div className="absolute left-[26%] top-[66%] h-px w-56 -rotate-6 bg-cyan-200/24" />
+              );
+            })}
+            <div className="absolute bottom-4 left-4 right-4 z-20 grid gap-2 rounded-md border border-white/10 bg-background/72 p-3 text-xs text-muted-foreground backdrop-blur">
+              <p><span className="text-amber-100">Amber line</span> means the domains belong to the same high-risk signal group.</p>
+              <p><span className="text-cyan-100">Cyan line</span> means the domains share a weaker manual-review signal.</p>
+            </div>
           </div>
         </Surface>
 
