@@ -24,8 +24,8 @@ export default function DashboardPage() {
               <Button asChild>
                 <Link href="/campaigns/new">Create campaign</Link>
               </Button>
-              <Button asChild variant="secondary">
-                <Link href="/claim/genesis-drop">Run claim demo</Link>
+              <Button asChild>
+                <Link href="https://www.loom.com/share/951bddca6e324c4381651810b68b72ed" target="_blank" rel="noopener noreferrer">Watch demo</Link>
               </Button>
             </div>
           </div>
